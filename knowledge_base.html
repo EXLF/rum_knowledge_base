@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RUM知识库</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        .platform-section {
+            margin-bottom: 40px;
+        }
+        .platform-title {
+            font-size: 24px;
+            color: #333;
+            border-bottom: 2px solid #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+        }
+        .qa-item {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        .question {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        .answer {
+            color: #34495e;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <section class="platform-section">
+        <h2 class="platform-title">Android</h2>
+        
+        <div class="qa-item">
+            <div class="question">Q：安卓最低支持的gradle版本、AGP版本</div>
+            <div class="answer">A：最低支持 AGP 3.3.0+ 对应的 gradle 4.10.1+</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：sdk缓存机制、缓存数据大小</div>
+            <div class="answer">A：2.17.3-2.17.4缓存batchdata是10Mb；2.16.0-2.17.2缓存按类型，一个类型一个文件，比如网络10Mb、页面10MB；2.17.5及之后没有缓存限制</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：哪个版本开始web和app分开录制视频、录屏</div>
+            <div class="answer">A：安卓 2.17.4，ios 2.17.5开始和web分开录屏，web的js 3.5.0版本开始</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：cpu的采集原理</div>
+            <div class="answer">A：详情参考文档链接 <a href="https://www.yuque.com/liangyangbin/pg9gbp/ggnteopk3iiamr7h?singleDoc">《CPU采集原理》</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：安卓卡顿堆栈采集方法、采集原理</div>
+            <div class="answer">A：采集方法是 StackTraceElement[] stackTraceElements = mainThread.getStackTrace();</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：崩溃采集原理、Native崩溃、java崩溃</div>
+            <div class="answer">A：应用发生Crash时，通过Handler采集崩溃信息并缓存，缓存最多5条崩溃数据，待下次启动时上传服务器，确保崩溃数据完整上传。注意点1：Native崩溃下次启动后上传，Java崩溃立即上传、注意点2：崩溃数据上传接口：reportCrash</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：sdk上传数据接口</div>
+            <div class="answer">A：安卓的 2.17.2 及之前的使用 uploadMobileData，2.17.3及之后的使用 reportBatchData；ios的2.17.3 及之前的使用 uploadMobileData，2.17.4及之后的使用 reportBatchData</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：tingyun的flutter插件下载地址</div>
+            <div class="answer">A：pub.dev，搜索tingyun</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：日志回捞数据默认存储路径</div>
+            <div class="answer">A：安卓默认路径：/sdcard/Android/data/${packageName}/files/nbs_logtrack_v1</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：数据安全性、安全性</div>
+            <div class="answer">A：传输协议：SDK与DC端采用加密的HTTPS传输协议，用以保证数据在传输网络过程中的安全。<br>
+数据加密：针对 SDK 上传的数据采用「国密算法」进行加密，本地缓存数据进行AES算法进行加密，以保证数据的安全性。<br>
+数据校验：对SDK上传数据的摘要进行非对称加密，能够有效防止数据篡改。通过针对SDK上传数据增加唯一标识，能够有效防止重放攻击。<br>
+增强安全性：通过在服务端配置「iOS:Bundle Identifier」或「Android:SHA1 fingerprint」能够有效防止伪造App（重签名应用）上传垃圾数据。</div>
+        </div>
+    </section>
+
+    <section class="platform-section">
+        <h2 class="platform-title">iOS</h2>
+        
+        <div class="qa-item">
+            <div class="question">Q：ios的崩溃堆栈、符号表的相关字段解释说明，如何查看崩溃堆栈？IOS崩溃堆栈详情说明</div>
+            <div class="answer">A：详情参考文档链接，<a href="https://www.yuque.com/liangyangbin/pg9gbp/vdrhdrvo9rpnsyvg?singleDoc">《ios的崩溃堆栈字段说明》</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：视频采集原理</div>
+            <div class="answer">A：安卓是截屏、ios是2.17.2开始是绘制</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：ios视频回放插件下载地址</div>
+            <div class="answer">A：<a href="https://download.tingyun.com/tingyunapp/ios_agent/NBSReplayKit-1.0.1.zip">https://download.tingyun.com/tingyunapp/ios_agent/NBSReplayKit-1.0.1.zip</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：iosOOM插件下载地址</div>
+            <div class="answer">A：<a href="https://download.tingyun.com/tingyunapp/ios_agent/NBSOOM-1.0.2.zip">https://download.tingyun.com/tingyunapp/ios_agent/NBSOOM-1.0.2.zip</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：ios日志回捞插件下载地址</div>
+            <div class="answer">A：<a href="https://download.tingyun.com/tingyunapp/ios_agent/TingyunLog-1.0.zip">https://download.tingyun.com/tingyunapp/ios_agent/TingyunLog-1.0.zip</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：ios崩溃在什么情况下不采集</div>
+            <div class="answer">A：对应打什么类型的包，debug、release包没有限制，只是在调试模式下触发的崩溃不采集。</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：380平台是否可以使用2.17.6</div>
+            <div class="answer">A：380不能使用2.17.6，因为跨应用导致的不能用，如果不使用跨应用也能用。</div>
+        </div>
+    </section>
+
+    <section class="platform-section">
+        <h2 class="platform-title">Web</h2>
+        
+        <div class="qa-item">
+            <div class="question">Q：9xx相关错误码的指标含义、解释</div>
+            <div class="answer">A：<br>
+903: XMLHttpRequest timeout事件触发<br>
+905: XMLHttpRequest abort事件触发<br>
+990: XMLHttpRequest error事件触发 以及 fetch reject</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：web操作成功、失败的定义</div>
+            <div class="answer">A：操作的状态默认都是成功的。失败的操作需要客户自定义操作埋点实现，参考官网埋点文档<a href="https://wukongdoc.tingyun.com/ty-doc/docs/doc/RUM/sdk_deploy/Web/api/spe/">https://wukongdoc.tingyun.com/ty-doc/docs/doc/RUM/sdk_deploy/Web/api/spe/</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：web的国密配置，国密探针配置</div>
+            <div class="answer">A："enc":{
+"enabled":true,
+"mode":"gm",
+"pubKey":"04F7700136569F4439EF802B1CE2C1A636EE84AE5B09B784C66BB97837E2B34AB3EF029D9A1CD96C1780D1976B9CB4C4C5A6C190B1DA70E9D2C0A28F455BE3E87B"
+}<br>
+详情参考设计文档：<a href="https://tingyun.yuque.com/zel7kt/dev/qdzd90usyte3sg8f">https://tingyun.yuque.com/zel7kt/dev/qdzd90usyte3sg8f</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：PV的统计方式</div>
+            <div class="answer">A：报表的使用量里统计的pv包括页面pv和路由pv；路由pv也就是路由操作，页面pv是概览里的pv</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：验证浏览器控制台的报错是否属于js错误、如何判断js是否可以采集</div>
+            <div class="answer">A：在浏览器控制台输入window.addEventListener('error', (error) => { console.log('捕获到异常：', error);});  如果能捕获到那就可以采集。</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：嵌码模板主要有哪些作用、有什么用途</div>
+            <div class="answer">A：1. 异步插入JS探针<br>
+2. 低版本浏览器限制不拉探针<br>
+3. 判断JS探针拉取协议<br>
+4. 删除TINGYUN APM设置的cookie<br>
+5. 提前收集longtask数据</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：https页面，探针是否能强制走http，是否可以强制走http</div>
+            <div class="answer">A：不可以， https的页面不能加载http资源，浏览器会有报错，浏览器有限制。只能http页面强制走https协议，这样就没问题。</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：k8s-nginx-ingress如何配置跨域</div>
+            <div class="answer">A：k8s-nginx-ingress配置跨域和nginx类似，只是语法上有些差异，具体参考文档：<a href="https://www.yuque.com/liangyangbin/pg9gbp/irr8ma530phrh65e?singleDoc">《k8s-nginx-ingress配置跨域》</a></div>
+        </div>
+    </section>
+
+    <section class="platform-section">
+        <h2 class="platform-title">小程序</h2>
+        
+        <div class="qa-item">
+            <div class="question">Q：小程序启用指定版本探针，如何启用指定版本探针</div>
+            <div class="answer">A：<a href="https://wukong2.tingyun.com/platform/config/agent/mp">https://wukong2.tingyun.com/platform/config/agent/mp</a></div>
+        </div>
+    </section>
+
+    <section class="platform-section">
+        <h2 class="platform-title">鸿蒙</h2>
+        
+        <div class="qa-item">
+            <div class="question">Q：如何卸载鸿蒙sdk</div>
+            <div class="answer">A：1.1.0以下执行以下命令 ohpm uninstall @tingyun/harmonyos；1.1.0及之后执行 ohpm uninstall @tingyun/sdk-core</div>
+        </div>
+    </section>
+
+    <section class="platform-section">
+        <h2 class="platform-title">其他</h2>
+        
+        <div class="qa-item">
+            <div class="question">Q：es 查询 trace 表</div>
+            <div class="answer">A：curl -u tingyun:nEtben@2_19 XGET 'localhost:9200/svr_action_trace_xxx/_search?pretty' -H 'Content-Type:application/json' -d '{"query":{"match":{"trace_guid":"e25fc8e037803b3"}}}'<br>
+svr_action_trace_xxx换成具体某一天的索引 guid换要查的id，localhost换es地址</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：ios、android、web的符号表分别如下</div>
+            <div class="answer">A：ios符号表是.dsym，android的是mapping.txt，web的是Source Map</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：怎么查看数据是存储在什么库</div>
+            <div class="answer">A：找到对应数据的接口api，查看datasource字段，如果是小写就是es，大写是druid。图文说明详情参考文档：<a href="https://www.yuque.com/liangyangbin/pg9gbp/iprp6cfzar4es6vv?singleDoc">《如何判断数据存放在什么库》</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：更改web上传数据地址组需要重启的组件</div>
+            <div class="answer">A：更能了探针地址，如果要js探针地址生效，需要重启browser-api和common-js-config组件</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：app的地域，没有城市级别数据、城市是未知</div>
+            <div class="answer">A：需要检查nacos的配置是否开启保存城市级别数据，具体参考文档：<a href="https://www.yuque.com/liangyangbin/pg9gbp/ww80tspon8p67u4e?singleDoc">《地域城市数据配置》</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：交互 Trace 数据全量采集</div>
+            <div class="answer">A：交互 Trace 数据全量采集包括了慢页面、慢操作、慢启动。关闭交互 Trace 数据全量采集开关的情况下只采集慢的、开启的情况全部采集。</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：平台国密配置、nacos国密配置、服务器国密配置</div>
+            <div class="answer">A：在nacos的app-dc-frontend修改是否走国密。图文详情参考文档：<a href="https://www.yuque.com/liangyangbin/pg9gbp/rlhnhavlhth3bmaq?singleDoc">《平台国密配置》</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：国密原理、web国密原理</div>
+            <div class="answer">A：使用sql导入证书到PL_U_CERT表，平台lisence会从证书里获取到pubkey传给browser-api，common-js-comfig会下发国密配置给web探针</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：web探针上报数据地址在哪里修改</div>
+            <div class="answer">A：在nacos的environment.yaml里修改，具体图文详情参考：<a href="https://www.yuque.com/liangyangbin/pg9gbp/ugpvyoglr2ymec8c?singleDoc">《web探针上报数据地址修改》</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：mysql登录方式、mysql登录账号密码</div>
+            <div class="answer">A：./mysql -uroot -pTingyun2_18</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：国密配置在哪里设置、是否强制走国密</div>
+            <div class="answer">A：在nacos的 frontend里 搜索 national-encrypt-enabled字段查看， 具体参考文档说明：<a href="https://www.yuque.com/liangyangbin/pg9gbp/ouaetic8ulfeskvc?singleDoc">《判断是否走国密及国密配置》</a></div>
+        </div>
+    </section>
+
+    <section class="platform-section">
+        <h2 class="platform-title">平台</h2>
+        
+        <div class="qa-item">
+            <div class="question">Q：各产品线的数据流，以下是390平台之前的数据流，390开始全部改用clickhouse</div>
+            <div class="answer">A：apm: 指标数据：探针->collector->apm-dc-frontend->kafka->wrap->kafka->druid<br>
+trace数据：探针->collector->apm-dc-frontend->kafka->wrap->es+nbfs<br>
+brs：指标数据：jssdk->openresty->kafka-wrap->kafka->druid<br>
+trace数据: jssdk->openresty->kafka-wrap->es+nbfs<br>
+app: 指标数据：appsdk->app-dc-frontend->kafka->wrap->kafka->druid<br>
+指标数据：appsdk->app-dc-frontend->kafka->wrap->kafka->common-es-insgetion->es+nbfs<br>
+infra: 主机数据：主机agent采集,collector拉取 -> infra-dc-wrap->kafka->druid</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：web探针下载地址、插件下载地址、平台对应版本探针、插件下载地址</div>
+            <div class="answer">A：<a href="https://down.tingyun.com/3.0/agent/brs/V3.8.0.0-release/">https://down.tingyun.com/3.0/agent/brs/V3.8.0.0-release/</a> 账号密码：wukong/VWhqvx6$m%vv</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：会话数据是哪个组件上传数据，会话的视频数据是哪个组件上传数据</div>
+            <div class="answer">A：frontend写入视频数据，wrap写入其他会话数据</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：dc-frontend开启access日志的方式</div>
+            <div class="answer">A：app-dc-frontend:<br>
+config:<br>
+# 长时间保留过滤日志的appIds<br>
+access-log-received-app-ids: 7002<br>
+# 是否长时间保留access日志开关,true:是;false:否<br>
+enable-access-log-received: true<br>
+log:<br>
+level:<br>
+root: INFO<br>
+com.tingyun: INFO<br>
+access_received_log: INFO<br>
+相关图文详情参考文档：<a href="https://www.yuque.com/liangyangbin/pg9gbp/gx18wk2gryx34ps1?singleDoc">《dc-frontend开启access日志的方式》</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：如何登录clickhouse</div>
+            <div class="answer">A：进入/tingyun/base/base-clickhouse目录，执行 ./clickhouse-client --user=default --password=Clickhouse2_18 登录</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：openresty配置文件路径</div>
+            <div class="answer">A：/data/tingyun/common/common-openresty/work/conf</div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：如何开启openresty的access日志</div>
+            <div class="answer">A：在nginx的配置文件nginx.conf.template里修改。具体参考文档：<a href="https://www.yuque.com/liangyangbin/pg9gbp/yoixwx3u2n42iwxe?singleDoc">《开启openresty的access日志》</a></div>
+        </div>
+
+        <div class="qa-item">
+            <div class="question">Q：国密的sql、国密证书、私有化国密sql</div>
+            <div class="answer">A：在venus_conf库执行国密sql， 私有化 web国密 执行的国密sql agreement_id默认是0 不需要改<br>
+INSERT INTO `PL_U_CERT` (`id`, `agreement_id`, `encoded`, `status`)<br>
+VALUES<br>
+(1,0,'MIIEJwIBAzCCA/EGCSqGSIb3DQEHAaCCA+IEggPeMIID2jCCArYGCSqGSIb3DQEHBqCCAqcwggKjAgEAMIICnAYJKoZIhvcNAQcBMBsGCiqGSIb3DQEMAQYwDQQIaUMjr/C/Ff4CAQGAggJwm/mQDLkBuyQpPKU3V65mDODTG1BoyADkhMaiCmfzZKlpsGeYOfDiOQWNBee8X4Uv8RMzo33kdiDzuUv4vHaVIevPtEszydWd76ZTDVpTS9MKRhS17CINPPxkaizssJea2xXZQhdqrPiRjhs4Fzp2SoRn8AQUe88AWqazmJf6Uc2VIQO5WnznRyiFRr7oMX2fm+3fpFTsnegPdZnP1/4YMxXtOTIj/OQb+J39eWG1FGKxxMid/EJ9GyLyefunhnnEp5fN9+It2xvKhws0VgPvoRfQRcHzALCiHa84/ialZGcE+9H+yVR6C1KevmCj0nS1afJjSy2Sg3QlgnPuSI8jcyCWiv6/bKwpUB0fThIbNlXfHIDdOrwuc86dsctebYOXvZpv31P95cxMI55rAL9flJLwPgh6pejpRbDB8J/6Btu/A/uBIONxFN1umcfRQVjZQm+VIR5zs0KMuE3odruxpnnV4OMk9xJVDG2rvsoJB7kiZVoD/SqJotR4R694G0puAO7bZ/o8HzKYJmh+hBIigJm/u3e2eDBNYgEfOcImsmXtRs7bs1d+zvKPlatjDNYg5WgiUN89nHWZWXwp6l99nAqFyGCIhI0OIJDyb+AKLgBOXP8SOxKPOQhnjRnXHLcFkDDAv82L14LS4Uqm9exT/fWCB8dbjTT+dBkT5YMATELQNp+h13SoI+n1gqJHrKy2MqqqYgkyJUW1mTSPaykk5ZDi0qCBVYTKmOQ9nzSUYfbJyH1WrxKeNcED6xp1VCzccBgR6ZicyTmMJW6sxdNsVBXGzr36D6FdOnTIhieXwiA5CF/zo2+MVewnFwy7hKJ8MIIBHAYJKoZIhvcNAQcBoIIBDQSCAQkwggEFMIIBAQYLKoZIhvcNAQwKAQKggbMwgbAwGwYKKoZIhvcNAQwBAzANBAi8VsB152wmMAIBAQSBkF8/0IyxrEYPSzP520V/IorgnBLIMr4XhffIM+XW3p69Wan2TrzXuCu2DBfnJVBFeLUJRSn+GrI/tKOaGkpZR+8XfM/kEOi5CWJwMeuxlNFOTIeNHIq1iISCGuqQQgk5Rf4eHqDfQxHgCfadg/KPNKPAtzTiTnJgnUm7yTaI9kRRm3tNBK9SG/iee7w+L2yDHjE8MBUGCSqGSIb3DQEJFDEIHgYAbgBiAHMwIwYJKoZIhvcNAQkVMRYEFFNNjZcvczdgk6txz1zT0hAubOJmMC0wITAJBgUrDgMCGgUABBSYwfuWEgGH389+uD9ssnLn4LZbEQQI4UoXy0KOMoY=',1);</div>
+        </div>
+    </section>
+</body>
+</html> 
